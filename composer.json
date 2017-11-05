@@ -1,0 +1,11 @@
+{
+	"name": "phpgt/cookie",
+	"minimum-stability": "stable",
+	"license": "MIT",
+
+	"autoload": {
+		"psr-4": {
+			"Gt\\Cookie\\": "./src"
+		}
+	}
+}
