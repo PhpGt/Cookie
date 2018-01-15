@@ -3,9 +3,26 @@
 	"minimum-stability": "stable",
 	"license": "MIT",
 
+	"require-dev": {
+		"phpunit/phpunit": "^6.4"
+	},
+
+	"authors": [
+		{
+			"name": "Greg Bowler",
+			"email": "greg.bowler@g105b.com"
+		}
+	],
+
 	"autoload": {
 		"psr-4": {
 			"Gt\\Cookie\\": "./src"
+		}
+	},
+
+	"autoload-dev": {
+		"psr-4": {
+			"Gt\\Cookie\\Test\\": "./test/unit"
 		}
 	}
 }
