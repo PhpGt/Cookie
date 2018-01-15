@@ -1,5 +1,5 @@
-Object oriented cookie implementation with PSR-7 compatibility.
----------------------------------------------------------------
+Object oriented cookie handler.
+-------------------------------
 
 Introduction paragraph.
 
