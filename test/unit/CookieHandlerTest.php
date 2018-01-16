@@ -25,14 +25,7 @@ class CookieHandlerTest extends TestCase {
 	 */
 	public function testHasNot(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
-		$fakeData = [];
-
-		for($i = 0; $i < 10; $i++) {
-			$name = Helper::getRandomText(Validity::getValidNameCharacters());
-			$value = Helper::getRandomText(Validity::getValidValueCharacters());
-
-			$fakeData[$name] = $value;
-		}
+		$fakeData = $this->generateFakeData();
 
 		foreach($fakeData as $name => $value) {
 			self::assertFalse($cookieHandler->has($name));
@@ -57,14 +50,7 @@ class CookieHandlerTest extends TestCase {
 	public function testGetNotExists(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
-		$fakeData = [];
-
-		for($i = 0; $i < 10; $i++) {
-			$name = Helper::getRandomText(Validity::getValidNameCharacters());
-			$value = Helper::getRandomText(Validity::getValidValueCharacters());
-
-			$fakeData[$name] = $value;
-		}
+		$fakeData = $this->generateFakeData();
 
 		foreach($fakeData as $name => $value) {
 			self::assertNull($cookieHandler->get($name));
@@ -102,6 +88,18 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider dataCookie
+	 */
+	public function testOffsetGetNotExist(array $cookieData) {
+		$cookieHandler = new CookieHandler($cookieData);
+		$fakeData = $this->generateFakeData();
+
+		foreach($fakeData as $name => $value) {
+			self::assertNull($cookieHandler[$name]);
+		}
+	}
+
 	public function dataCookie():array {
 		$data = [];
 
@@ -124,5 +122,18 @@ class CookieHandlerTest extends TestCase {
 		}
 
 		return $data;
+	}
+
+	protected function generateFakeData(int $amount = 10) {
+		$fakeData = [];
+
+		for($i = 0; $i < $amount; $i++) {
+			$name = Helper::getRandomText(Validity::getValidNameCharacters());
+			$value = Helper::getRandomText(Validity::getValidValueCharacters());
+
+			$fakeData[$name] = $value;
+		}
+
+		return $fakeData;
 	}
 }
