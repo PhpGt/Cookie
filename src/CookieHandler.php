@@ -53,6 +53,13 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 
 	public function delete(string $name):void {
 		unset($this->cookieList[$name]);
+
+		setcookie(
+			$name,
+			"",
+			-1,
+			"/"
+		);
 	}
 
 	public function offsetExists($offset):bool {
@@ -68,7 +75,7 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 	}
 
 	public function offsetSet($offset, $value):void {
-		$this->set($offset, $value);
+		throw new CookieSetException("Cookies can not be set using ArrayAccess, please use the CookieHandler::set method instead. https://www.php.gt/cookies");
 	}
 
 	public function offsetUnset($offset):void {
