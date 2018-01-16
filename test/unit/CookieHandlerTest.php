@@ -59,6 +59,7 @@ class CookieHandlerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataCookie
+	 * @runInSeparateProcess
 	 */
 	public function testDelete(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
@@ -140,6 +141,41 @@ class CookieHandlerTest extends TestCase {
 				$value,
 				$cookie->getValue()
 			);
+		}
+	}
+
+	/**
+	 * @dataProvider dataCookie
+	 * @runInSeparateProcess
+	 */
+	public function testSetDelete(array $cookieData) {
+		$cookieHandler = new CookieHandler();
+
+		foreach($cookieData as $name => $value) {
+			$cookieHandler->set($name, $value);
+		}
+
+		$deletedNames = [];
+		$numToDelete = rand(1, count($cookieData));
+
+		for($i = 0; $i < $numToDelete; $i++) {
+			$nameToDelete = array_rand($cookieData);
+			$cookieHandler->delete($nameToDelete);
+			$deletedNames [] = $nameToDelete;
+		}
+
+		foreach($cookieData as $name => $value) {
+			$cookie = $cookieHandler->get($name);
+
+			if(in_array($name, $deletedNames)) {
+				self::assertNull($cookie);
+			}
+			else {
+				self::assertEquals(
+					$value,
+					$cookie->getValue()
+				);
+			}
 		}
 	}
 
