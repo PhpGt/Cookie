@@ -71,6 +71,25 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider dataCookie
+	 */
+	public function testDelete(array $cookieData) {
+		$cookieHandler = new CookieHandler($cookieData);
+		$deleted = [];
+		$numToDelete = rand(1, count($cookieData));
+
+		for($i = 0; $i < $numToDelete; $i++) {
+			$nameToDelete = array_rand($cookieData);
+			$cookieHandler->delete($nameToDelete);
+			$deleted []= $nameToDelete;
+		}
+
+		foreach($deleted as $name) {
+			self::assertFalse($cookieHandler->has($name));
+		}
+	}
+
 	public function dataCookie():array {
 		$data = [];
 
