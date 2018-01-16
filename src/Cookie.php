@@ -7,10 +7,10 @@ class Cookie {
 
 	public function __construct(string $name, string $value = "") {
 		if(!Validity::isValidName($name)) {
-			throw new InvalidCharactersException($name);
+			throw new InvalidCharactersException("Name contains invalid characters: $name");
 		}
 		if(!Validity::isValidValue($value)) {
-			throw new InvalidCharactersException($value);
+			throw new InvalidCharactersException("Value contains invalid characters: $value");
 		}
 
 		$this->name = $name;

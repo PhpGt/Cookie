@@ -48,7 +48,7 @@ class Validity {
 		}
 
 		$nameChars = str_split($value, 1);
-		$validChars = self::getValidNameCharacters();
+		$validChars = self::getValidValueCharacters();
 		foreach($nameChars as $c) {
 			if(!in_array($c, $validChars)) {
 				$valid = false;

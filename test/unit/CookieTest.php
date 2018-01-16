@@ -54,6 +54,19 @@ class CookieTest extends TestCase {
 		$cookie->withValue($value);
 	}
 
+	/**
+	 * @dataProvider dataNameValue
+	 */
+	public function testWithValue(string $name, string $value) {
+		$cookie = new Cookie($name, $value);
+		$value = $cookie->getValue();
+
+		$eulav = strrev($value);
+		$eikooc = new Cookie($name, $eulav);
+		self::assertNotSame($eikooc, $cookie);
+		self::assertNotEquals($value, $eikooc->getValue());
+	}
+
 	public static function dataNameValue():array {
 		$data = [];
 
