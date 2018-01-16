@@ -40,7 +40,7 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 			$expires = new DateTime();
 		}
 
-		$success = setcookie(
+		setcookie(
 			$name,
 			$value,
 			$expires->getTimestamp(),
@@ -49,23 +49,15 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 			$secure,
 			$httponly
 		);
-
-		if(!$success) {
-			throw new CookieSetException("Failure calling setcookie");
-		}
 	}
 
 	public function delete(string $name):void {
-		$success = setcookie(
+		setcookie(
 			$name,
 			"",
 			-1,
 			"/"
 		);
-
-		if(!$success) {
-			throw new CookieSetException("Failure calling setcookie to delete");
-		}
 
 		unset($this->cookieList[$name]);
 	}
