@@ -33,6 +33,27 @@ class CookieTest extends TestCase {
 		new Cookie($name);
 	}
 
+	/**
+	 * @dataProvider dataNameValue
+	 */
+	public function testConstructInvalidValue(string $name, string $value) {
+		$value = $this->injectInvalidCharacters($value);
+
+		self::expectException(InvalidCharactersException::class);
+		new Cookie($name, $value);
+	}
+
+	/**
+	 * @dataProvider dataNameValue
+	 */
+	public function testSetInvalidValue(string $name, string $value) {
+		$value = $this->injectInvalidCharacters($value);
+
+		$cookie = new Cookie($name);
+		self::expectException(InvalidCharactersException::class);
+		$cookie->withValue($value);
+	}
+
 	public static function dataNameValue():array {
 		$data = [];
 

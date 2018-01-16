@@ -43,6 +43,10 @@ class Validity {
 	public static function isValidValue(string $value):bool {
 		$valid = true;
 
+		if($value === "") {
+			return $valid;
+		}
+
 		$nameChars = str_split($value, 1);
 		$validChars = self::getValidNameCharacters();
 		foreach($nameChars as $c) {
