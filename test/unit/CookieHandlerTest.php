@@ -39,6 +39,18 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider dataCookie
+	 */
+	public function testGet(array $cookieData) {
+		$cookieHandler = new CookieHandler($cookieData);
+
+		foreach($cookieData as $name => $value) {
+			$cookie = $cookieHandler->get($name);
+			$this->assertEquals($value, $cookie->getValue());
+		}
+	}
+
 	public function dataCookie():array {
 		$data = [];
 
