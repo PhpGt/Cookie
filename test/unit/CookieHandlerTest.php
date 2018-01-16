@@ -4,6 +4,7 @@ namespace Gt\Cookie\Test;
 
 use Gt\Cookie\Cookie;
 use Gt\Cookie\CookieHandler;
+use Gt\Cookie\CookieSetException;
 use Gt\Cookie\Test\Helper\Helper;
 use Gt\Cookie\Validity;
 use PHPUnit\Framework\TestCase;
@@ -213,6 +214,12 @@ class CookieHandlerTest extends TestCase {
 		}
 
 		self::assertEquals(count($cookieData), $count);
+	}
+
+	public function testOffsetSet() {
+		$cookieHandler = new CookieHandler();
+		self::expectException(CookieSetException::class);
+		$cookieHandler["anything"] = "nothing";
 	}
 
 	public function dataCookie():array {
