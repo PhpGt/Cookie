@@ -2,18 +2,19 @@
 namespace Gt\Cookie;
 
 use ArrayAccess;
+use Countable;
 use DateTime;
 use DateTimeInterface;
 use Iterator;
 
-class CookieHandler implements ArrayAccess, Iterator {
+class CookieHandler implements ArrayAccess, Iterator, Countable {
 	/** @var Cookie[] */
 	protected $cookieList = [];
 	protected $iteratorIndex = 0;
 
 	public function __construct(array $cookie) {
-		foreach($cookie as $key => $value) {
-			$this->cookieList []= new Cookie($key, $value);
+		foreach($cookie as $name => $value) {
+			$this->cookieList[$name] = new Cookie($name, $value);
 		}
 	}
 
@@ -95,5 +96,9 @@ class CookieHandler implements ArrayAccess, Iterator {
 	protected function getIteratorNamedIndex():string {
 		$keys = array_keys($this->cookieList);
 		return $keys[$this->iteratorIndex];
+	}
+
+	public function count():int {
+		return count($this->cookieList);
 	}
 }
