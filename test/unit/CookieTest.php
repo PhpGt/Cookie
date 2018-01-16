@@ -14,6 +14,14 @@ class CookieTest extends TestCase {
 		self::assertEquals($name, $cookie->getName());
 	}
 
+	/**
+	 * @dataProvider dataNameValue
+	 */
+	public function testGetValue(string $name, string $value) {
+		$cookie = new Cookie($name, $value);
+		self::assertEquals($value, $cookie->getValue());
+	}
+
 	public static function dataNameValue():array {
 		$data = [];
 
