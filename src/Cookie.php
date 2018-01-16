@@ -17,10 +17,6 @@ class Cookie {
 		$this->value = $value;
 	}
 
-	public function __toString():string {
-		return $this->name . "=" . $this->value;
-	}
-
 	public function getName():string {
 		return $this->name;
 	}
