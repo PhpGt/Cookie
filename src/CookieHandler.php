@@ -12,8 +12,8 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 	protected $cookieList = [];
 	protected $iteratorIndex = 0;
 
-	public function __construct(array $cookie) {
-		foreach($cookie as $name => $value) {
+	public function __construct(array $existingCookies = []) {
+		foreach($existingCookies as $name => $value) {
 			$this->cookieList[$name] = new Cookie($name, $value);
 		}
 	}
@@ -40,7 +40,7 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 			$expires = new DateTime();
 		}
 
-		setcookie(
+		$success = setcookie(
 			$name,
 			$value,
 			$expires->getTimestamp(),
@@ -49,6 +49,10 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 			$secure,
 			$httponly
 		);
+
+		if(!$success) {
+			throw new CookieSetException("Failure calling setcookie");
+		}
 	}
 
 	public function delete(string $name):void {

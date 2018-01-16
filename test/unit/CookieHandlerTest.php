@@ -123,6 +123,26 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider dataCookie
+	 * @runInSeparateProcess
+	 */
+	public function testSet(array $cookieData) {
+		$cookieHandler = new CookieHandler();
+
+		foreach($cookieData as $name => $value) {
+			$cookieHandler->set($name, $value);
+		}
+
+		foreach($cookieData as $name => $value) {
+			$cookie = $cookieHandler->get($name);
+			self::assertEquals(
+				$value,
+				$cookie->getValue()
+			);
+		}
+	}
+
 	public function dataCookie():array {
 		$data = [];
 
