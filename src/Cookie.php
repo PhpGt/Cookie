@@ -6,6 +6,13 @@ class Cookie {
 	protected $value;
 
 	public function __construct(string $name, string $value = "") {
+		if(!Validity::isValidName($name)) {
+			throw new InvalidCharactersException($name);
+		}
+		if(!Validity::isValidValue($value)) {
+			throw new InvalidCharactersException($value);
+		}
+
 		$this->name = $name;
 		$this->value = $value;
 	}
@@ -19,6 +26,10 @@ class Cookie {
 	}
 
 	public function withValue(string $value):self {
+		if(!Validity::isValidValue($value)) {
+			throw new InvalidCharactersException($value);
+		}
+
 		$clone = clone($this);
 		$clone->value = $value;
 		return $clone;

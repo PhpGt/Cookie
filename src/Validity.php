@@ -25,4 +25,32 @@ class Validity {
 	public static function getValidValueCharacters():array {
 		return str_split(self::ALPHANUMERIC_CHARACTERS . self::VALUE_CHARACTERS);
 	}
+
+	public static function isValidName(string $name):bool {
+		$valid = true;
+
+		$nameChars = str_split($name, 1);
+		$validChars = self::getValidNameCharacters();
+		foreach($nameChars as $c) {
+			if(!in_array($c, $validChars)) {
+				$valid = false;
+			}
+		}
+
+		return $valid;
+	}
+
+	public static function isValidValue(string $value):bool {
+		$valid = true;
+
+		$nameChars = str_split($value, 1);
+		$validChars = self::getValidNameCharacters();
+		foreach($nameChars as $c) {
+			if(!in_array($c, $validChars)) {
+				$valid = false;
+			}
+		}
+
+		return $valid;
+	}
 }

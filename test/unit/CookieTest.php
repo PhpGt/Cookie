@@ -2,6 +2,7 @@
 namespace Gt\Cookie\Test;
 
 use Gt\Cookie\Cookie;
+use Gt\Cookie\InvalidCharactersException;
 use Gt\Cookie\Validity;
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +21,16 @@ class CookieTest extends TestCase {
 	public function testGetValue(string $name, string $value) {
 		$cookie = new Cookie($name, $value);
 		self::assertEquals($value, $cookie->getValue());
+	}
+
+	/**
+	 * @dataProvider dataNameValue
+	 */
+	public function testConstructInvalidName(string $name, string $value) {
+		$name = $this->injectInvalidCharacters($name);
+
+		self::expectException(InvalidCharactersException::class);
+		new Cookie($name);
 	}
 
 	public static function dataNameValue():array {
@@ -50,5 +61,28 @@ class CookieTest extends TestCase {
 		}
 
 		return $text;
+	}
+
+	protected function injectInvalidCharacters(
+		string $name,
+		int $minLength = 1,
+		int $maxLength = 100
+	):string {
+		$invalidCharacters = str_split(",´ō▓Æ®§×ƒ²┐╔", 1);
+		$length = rand($minLength, $maxLength);
+
+		for($i = 0; $i < $length; $i++) {
+			$pos = rand(0, strlen($name));
+			$charKey = array_rand($invalidCharacters);
+			$char = $invalidCharacters[$charKey];
+
+			$name = substr_replace(
+				$name,
+				$char,
+				$pos
+			);
+		}
+
+		return $name;
 	}
 }
