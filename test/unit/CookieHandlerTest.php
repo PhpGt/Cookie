@@ -20,6 +20,25 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider dataCookie
+	 */
+	public function testHasNot(array $cookieData) {
+		$cookieHandler = new CookieHandler($cookieData);
+		$fakeData = [];
+
+		for($i = 0; $i < 10; $i++) {
+			$name = Helper::getRandomText(Validity::getValidNameCharacters());
+			$value = Helper::getRandomText(Validity::getValidValueCharacters());
+
+			$fakeData[$name] = $value;
+		}
+
+		foreach($fakeData as $name => $value) {
+			self::assertFalse($cookieHandler->has($name));
+		}
+	}
+
 	public function dataCookie():array {
 		$data = [];
 
