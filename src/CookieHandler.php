@@ -90,9 +90,10 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 		$this->delete($offset);
 	}
 
-	public function current():Cookie {
+	public function current():?string {
 		$name = $this->getIteratorNamedIndex();
-		return $this->cookieList[$name];
+		$cookie = $this->get($name);
+		return $cookie->getValue();
 	}
 
 	public function next():void {
@@ -104,6 +105,10 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 	}
 
 	public function valid() {
+		if($this->iteratorIndex > $this->count() - 1) {
+			return false;
+		}
+
 		$name = $this->getIteratorNamedIndex();
 		return $this->has($name);
 	}
