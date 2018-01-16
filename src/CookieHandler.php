@@ -23,7 +23,7 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 	}
 
 	public function get(string $name):?Cookie {
-		return self::offsetGet($name);
+		return $this->cookieList[$name] ?? null;
 	}
 
 	public function set(
@@ -59,8 +59,12 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 		return $this->has($offset);
 	}
 
-	public function offsetGet($offset):?Cookie {
-		return $this->cookieList[$offset] ?? null;
+	public function offsetGet($offset):?string {
+		if($this->has($offset)) {
+			return $this->get($offset)->getValue();
+		}
+
+		return null;
 	}
 
 	public function offsetSet($offset, $value):void {

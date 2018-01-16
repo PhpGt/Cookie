@@ -90,6 +90,18 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider dataCookie
+	 */
+	public function testOffsetGet(array $cookieData) {
+		$cookieHandler = new CookieHandler($cookieData);
+
+		foreach($cookieData as $name => $expectedValue) {
+			$actualValue = $cookieHandler[$name];
+			self::assertEquals($expectedValue, $actualValue);
+		}
+	}
+
 	public function dataCookie():array {
 		$data = [];
 
