@@ -79,6 +79,26 @@ class CookieHandlerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataCookie
+	 * @runInSeparateProcess
+	 */
+	public function testOffsetUnset(array $cookieData) {
+		$cookieHandler = new CookieHandler($cookieData);
+		$deleted = [];
+		$numToDelete = rand(1, count($cookieData));
+
+		for($i = 0; $i < $numToDelete; $i++) {
+			$nameToDelete = array_rand($cookieData);
+			unset($cookieHandler[$nameToDelete]);
+			$deleted []= $nameToDelete;
+		}
+
+		foreach($deleted as $name) {
+			self::assertFalse($cookieHandler->has($name));
+		}
+	}
+
+	/**
+	 * @dataProvider dataCookie
 	 */
 	public function testOffsetGet(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
