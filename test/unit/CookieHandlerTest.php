@@ -111,6 +111,18 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider dataCookie
+	 */
+	public function testOffsetNotExists(array $cookieData) {
+		$cookieHandler = new CookieHandler($cookieData);
+		$fakeData = $this->generateFakeData();
+
+		foreach($fakeData as $name => $value) {
+			self::assertFalse(isset($cookieHandler[$name]));
+		}
+	}
+
 	public function dataCookie():array {
 		$data = [];
 
