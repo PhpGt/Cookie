@@ -62,7 +62,7 @@ class CookieTest extends TestCase {
 		$value = $cookie->getValue();
 
 		$eulav = strrev($value);
-		$eikooc = new Cookie($name, $eulav);
+		$eikooc = $cookie->withValue($eulav);
 		self::assertNotSame($eikooc, $cookie);
 		self::assertNotEquals($value, $eikooc->getValue());
 	}
