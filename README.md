@@ -1,7 +1,7 @@
 Object oriented cookie handler.
 -------------------------------
 
-Introduction paragraph.
+This library is a simple object oriented alternative to the `$_COOKIE` superglobal that can be read using the same associative array style code. Cookies are represented by immutable objects, meaning that the state of the request/response cookies cannot be accidentally changed by undisclosed areas of code.
 
 ***
 
@@ -22,3 +22,7 @@ Introduction paragraph.
 </a>
 
 ## Example usage: xyz.
+
+## What's not covered?
+
+This library does not touch on encrypting cookies. To store sensitive information across HTTP requests, use a session variable. To ensure cookies can't be read by JavaScript, use a secure HTTP-only cookie.
