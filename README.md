@@ -21,9 +21,31 @@ This library is a simple object oriented alternative to the `$_COOKIE` superglob
 	<img src="https://img.shields.io/badge/docs-www.php.gt/cookie-26a5e3.svg?style=flat-square" alt="PHP.Gt/Cookie documentation" />
 </a>
 
-## Example usage: xyz.
+## Example usage
 
-// TODO.
+```php
+// Create a replacement for $_COOKIE.
+$cookie = new Gt\Cookie\CookieHandler($_COOKIE);
+
+// Access values as normal.
+$value = $cookie["firstVisit"];
+
+if(isset($cookie["firstVisit"])) {
+// Cookie "firstVisit" exists.
+}
+
+if($cookie->has("firstVisit")) {
+// Cookie "firstVisit" exists.
+}
+else {
+// Create a new cookie that expires in ten days.
+	$now = new DateTime();
+	$expire = new DateTime("+10 days");
+	$cookie->set("firstVisit", $now, $expire);
+}
+
+// Now you can unset the superglobal!
+```
 
 ## What's not covered?
 
