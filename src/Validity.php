@@ -8,8 +8,8 @@ namespace Gt\Cookie;
  */
 class Validity {
 // Note that name/value characters are additional to alphanumerics:
-	const NAME_CHARACTERS = "!#$%&'*+-.^_`|~";
-	const VALUE_CHARACTERS = "!#$%&'()*+-./:=><?@[]^_`{|}~ ";
+	const NAME_CHARACTERS = '!#$%&\'*+-.^_`|~';
+	const VALUE_CHARACTERS = '!#$%&\'()*+-./:=><?@[]^_`{|}~ ';
 	const ALPHANUMERIC_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	/**

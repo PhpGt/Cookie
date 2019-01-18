@@ -165,12 +165,15 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 * @runInSeparateProcess
-	 */
+	/** @dataProvider dataCookie */
 	public function testSetDelete(array $cookieData) {
 		$cookieHandler = new CookieHandler();
+
+// Add known-to-be-tricky cookies: (for issue #14)
+		$cookieData['1'] = "something";
+		$cookieData['0'] = "something";
+		$cookieData['tGQBfw\'#68u36UkhMh8WjjGNXeQcj+oKmOMGhx9zxH-_rMwb6cLo%k4zGuE7HOLnR$%|8RKKmmcNR0i'] = 'y3=98e~gyG\'vN=T_7wiy0Fz1P*!Sx{9I&nO+U-\'YPG$4rv]Lj0><V~?B)b(x6fX[5V&NC6hY{-?^KC+-@a:Q{n';
+		$cookieData['02%AZ2RRhx~jOG^YN9^0kf\'%aLA!v8^^^Xe8oO^t6*'] = 'v9|/%d2_UAg2WTd[Hfzj`Q]O<M KU+v7gYSf-_}eu&Y+r~s^tWS[=!Hx`ZtXBG4|{~qMh9 V>?)+i3XdmCYb+_~BR]y';
 
 		foreach($cookieData as $name => $value) {
 			$cookieHandler->set($name, $value);
