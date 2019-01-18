@@ -51,14 +51,14 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 	}
 
 	public function delete(string $name):void {
+		unset($this->cookieList[$name]);
+
 		setcookie(
 			$name,
 			"",
 			-1,
 			"/"
 		);
-
-		unset($this->cookieList[$name]);
 	}
 
 	public function offsetExists($offset):bool {

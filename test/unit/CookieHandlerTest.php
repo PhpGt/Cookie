@@ -6,6 +6,7 @@ use Gt\Cookie\Cookie;
 use Gt\Cookie\CookieHandler;
 use Gt\Cookie\CookieSetException;
 use Gt\Cookie\Test\Helper\Helper;
+use Gt\Cookie\Test\Helper\Override;
 use Gt\Cookie\Validity;
 use PHPUnit\Framework\TestCase;
 
@@ -166,7 +167,16 @@ class CookieHandlerTest extends TestCase {
 	}
 
 	/** @dataProvider dataCookie */
-	public function testSetDelete(array $cookieData) {
+	public function testSetDelete(array $cookieData = []) {
+		$setCookieCalls = [];
+
+		Override::setCallback(
+			"setcookie",
+			function(string $name, string $value, int $expires = 0, string $path = "", string $domain = "", bool $secure = false, bool $httponly = false) use(&$setCookieCalls) {
+				$setCookieCalls []= [$name, $value, $expires, $path, $domain, $secure, $httponly];
+			}
+		);
+
 		$cookieHandler = new CookieHandler();
 
 // Add known-to-be-tricky cookies: (for issue #14)
@@ -191,7 +201,7 @@ class CookieHandlerTest extends TestCase {
 		foreach($cookieData as $name => $value) {
 			$cookie = $cookieHandler->get($name);
 
-			if(in_array($name, $deletedNames)) {
+			if(in_array($name, $deletedNames, true)) {
 				self::assertNull($cookie);
 			}
 			else {

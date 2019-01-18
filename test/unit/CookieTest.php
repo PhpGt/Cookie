@@ -83,7 +83,7 @@ class CookieTest extends TestCase {
 
 	protected static function getRandomText(
 		array $charSet,
-		int $minLength = 1,
+		int $minLength = 2,
 		int $maxLength = 100
 	):string {
 		$text = "";
