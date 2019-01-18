@@ -18,7 +18,7 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 		}
 	}
 
-	public function has(string $name):bool {
+	public function contains(string $name):bool {
 		return isset($this->cookieList[$name]);
 	}
 
@@ -63,11 +63,11 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 	}
 
 	public function offsetExists($offset):bool {
-		return $this->has($offset);
+		return $this->contains($offset);
 	}
 
 	public function offsetGet($offset):?string {
-		if($this->has($offset)) {
+		if($this->contains($offset)) {
 			return $this->get($offset)->getValue();
 		}
 
@@ -102,7 +102,7 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 		}
 
 		$name = $this->getIteratorNamedIndex();
-		return $this->has($name);
+		return $this->contains($name);
 	}
 
 	public function rewind() {

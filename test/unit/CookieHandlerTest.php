@@ -13,11 +13,11 @@ class CookieHandlerTest extends TestCase {
 	/**
 	 * @dataProvider dataCookie
 	 */
-	public function testHas(array $cookieData) {
+	public function testcontains(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
 		foreach($cookieData as $key => $value) {
-			self::assertTrue($cookieHandler->has($key));
+			self::assertTrue($cookieHandler->contains($key));
 		}
 	}
 
@@ -29,7 +29,7 @@ class CookieHandlerTest extends TestCase {
 		$fakeData = $this->generateFakeData();
 
 		foreach($fakeData as $name => $value) {
-			self::assertFalse($cookieHandler->has($name));
+			self::assertFalse($cookieHandler->contains($name));
 		}
 	}
 
@@ -74,7 +74,7 @@ class CookieHandlerTest extends TestCase {
 		}
 
 		foreach($deleted as $name) {
-			self::assertFalse($cookieHandler->has($name));
+			self::assertFalse($cookieHandler->contains($name));
 		}
 	}
 
@@ -94,7 +94,7 @@ class CookieHandlerTest extends TestCase {
 		}
 
 		foreach($deleted as $name) {
-			self::assertFalse($cookieHandler->has($name));
+			self::assertFalse($cookieHandler->contains($name));
 		}
 	}
 
