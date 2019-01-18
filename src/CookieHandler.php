@@ -30,7 +30,6 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 		string $name,
 		string $value,
 		DateTimeInterface $expires = null,
-		string $path = "/",
 		string $domain = "",
 		bool $secure = false,
 		bool $httponly = false
@@ -44,7 +43,7 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 			$name,
 			$value,
 			$expires->getTimestamp(),
-			$path,
+			"/",
 			$domain,
 			$secure,
 			$httponly
