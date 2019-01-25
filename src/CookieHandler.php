@@ -62,7 +62,13 @@ class CookieHandler implements ArrayAccess, Iterator, Countable {
 	}
 
 	public function asArray():array {
-		return $this->cookieList;
+		$array = [];
+
+		foreach($this->cookieList as $cookie) {
+			$array[$cookie->getName()] = $cookie->getValue();
+		}
+
+		return $array;
 	}
 
 	public function offsetExists($offset):bool {
