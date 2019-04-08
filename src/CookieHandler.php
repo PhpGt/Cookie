@@ -9,12 +9,30 @@ use Iterator;
 
 class CookieHandler implements ArrayAccess, Iterator, Countable {
 	/** @var Cookie[] */
-	protected $cookieList = [];
-	protected $iteratorIndex = 0;
+	protected $cookieList;
+	protected $iteratorIndex;
 
 	public function __construct(array $existingCookies = []) {
+		$this->cookieList = [];
+		$this->iteratorIndex = 0;
+
 		foreach($existingCookies as $name => $value) {
 			$this->cookieList[$name] = new Cookie($name, $value);
+		}
+	}
+
+	public function clear(string...$nameList):void {
+		if(empty($nameList)) {
+			$this->clear(...array_keys($this->cookieList));
+		}
+
+		foreach($nameList as $name) {
+			$this->set(
+				$name,
+				"",
+				new DateTime("-1 hour")
+			);
+			unset($this->cookieList[$name]);
 		}
 	}
 
