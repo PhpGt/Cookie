@@ -11,9 +11,7 @@ use Gt\Cookie\Validity;
 use PHPUnit\Framework\TestCase;
 
 class CookieHandlerTest extends TestCase {
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testcontains(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
@@ -22,9 +20,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testHasNot(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 		$fakeData = $this->generateFakeData();
@@ -34,9 +30,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testGet(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
@@ -46,9 +40,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testGetNotExists(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
@@ -99,9 +91,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testOffsetGet(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
@@ -111,9 +101,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testOffsetGetNotExist(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 		$fakeData = $this->generateFakeData();
@@ -123,9 +111,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testOffsetExists(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
@@ -134,9 +120,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testOffsetNotExists(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 		$fakeData = $this->generateFakeData();
@@ -213,9 +197,7 @@ class CookieHandlerTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataCookie
-	 */
+	/** @dataProvider dataCookie */
 	public function testIterator(array $cookieData) {
 		$cookieHandler = new CookieHandler($cookieData);
 
@@ -233,6 +215,56 @@ class CookieHandlerTest extends TestCase {
 		$cookieHandler = new CookieHandler();
 		self::expectException(CookieSetException::class);
 		$cookieHandler["anything"] = "nothing";
+	}
+
+	/** @dataProvider dataCookie */
+	public function testClearAll(array $cookieData) {
+		$setCookieCalls = [];
+		Override::setCallback(
+			"setcookie",
+			function(string $name, string $value, int $expires = 0, string $path = "", string $domain = "", bool $secure = false, bool $httponly = false) use(&$setCookieCalls) {
+				$setCookieCalls []= [$name, $value, $expires, $path, $domain, $secure, $httponly];
+			}
+		);
+
+		$sut = new CookieHandler($cookieData);
+		self::assertGreaterThan(0, count($sut));
+		$sut->clear();
+		self::assertEquals(0, count($sut));
+
+		self::assertEquals(count($cookieData), count($setCookieCalls));
+	}
+
+	/** @dataProvider  dataCookie */
+	public function testClearMultiple(array $cookieData) {
+		Override::setCallback("setcookie",	function(){});
+		$sut = new CookieHandler($cookieData);
+		$numberToClear = rand(0, count($cookieData) - 1);
+		$cookiesToClear = [];
+		$copyOfCookieData = $cookieData;
+
+		for($i = 0; $i < $numberToClear; $i++) {
+			$toClear = array_rand($copyOfCookieData);
+			$cookiesToClear []= $toClear;
+			unset($copyOfCookieData[$toClear]);
+		}
+
+		$sut->clear(...$cookiesToClear);
+
+		self::assertCount(
+			count($cookieData) - count($cookiesToClear),
+			$sut
+		);
+	}
+
+	/** @dataProvider  dataCookie */
+	public function testClearSingle(array $cookieData) {
+		$toClear = array_rand($cookieData);
+		Override::setCallback("setcookie",	function(){});
+		$sut = new CookieHandler($cookieData);
+		self::assertTrue($sut->contains($toClear));
+		$sut->clear($toClear);
+		self::assertFalse($sut->contains($toClear));
 	}
 
 	public function dataCookie():array {
