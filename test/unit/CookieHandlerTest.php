@@ -240,7 +240,7 @@ class CookieHandlerTest extends TestCase {
 
 		for($dataCount = 0; $dataCount < 10; $dataCount++) {
 			$minCookies = 1;
-			$maxCookies = 100;
+			$maxCookies = 10;
 			$numCookies = rand($minCookies, $maxCookies);
 			$cookieData = [];
 
