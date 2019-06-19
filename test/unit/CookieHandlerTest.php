@@ -235,7 +235,7 @@ class CookieHandlerTest extends TestCase {
 		self::assertEquals(count($cookieData), count($setCookieCalls));
 	}
 
-	/** @dataProvider  dataCookie */
+	/** @dataProvider dataCookie */
 	public function testClearMultiple(array $cookieData) {
 		Override::setCallback("setcookie",	function(){});
 		$sut = new CookieHandler($cookieData);
@@ -249,7 +249,9 @@ class CookieHandlerTest extends TestCase {
 			unset($copyOfCookieData[$toClear]);
 		}
 
-		$sut->clear(...$cookiesToClear);
+		if(!empty($cookiesToClear)) {
+			$sut->clear(...$cookiesToClear);
+		}
 
 		self::assertCount(
 			count($cookieData) - count($cookiesToClear),
