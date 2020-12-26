@@ -8,7 +8,8 @@
 	},
 
 	"require-dev": {
-		"phpunit/phpunit": "8.*"
+		"phpunit/phpunit": "9.*",
+		"phpstan/phpstan": ">=0.12.64"
 	},
 
 	"authors": [
@@ -26,7 +27,7 @@
 
 	"autoload-dev": {
 		"psr-4": {
-			"Gt\\Cookie\\Test\\": "./test/unit"
+			"Gt\\Cookie\\Test\\": "./test/phpunit"
 		}
 	}
 }

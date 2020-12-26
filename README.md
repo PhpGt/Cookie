@@ -5,7 +5,7 @@ This library is a simple object oriented alternative to the `$_COOKIE` superglob
 
 ***
 
-<a href="https://circleci.com/gh/PhpGt/Cookie" target="_blank">
+<a href="https://github.com/PhpGt/Cookie/actions" target="_blank">
 	<img src="https://badge.status.php.gt/cookie-build.svg" alt="Build status" />
 </a>
 <a href="https://scrutinizer-ci.com/g/PhpGt/Cookie" target="_blank">
