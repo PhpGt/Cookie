@@ -29,5 +29,12 @@
 		"psr-4": {
 			"Gt\\Cookie\\Test\\": "./test/phpunit"
 		}
-	}
+	},
+	
+	"funding": [
+		{
+			"type": "github",
+			"url": "https://github.com/sponsors/PhpGt"
+		}
+	]
 }
